@@ -6,6 +6,7 @@
     <div class="text">
       This is me using Tailwind for the first time
     </div>
+    <AllForms />
     <div class="w-full max-w-xs">
   <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <div class="mb-4">
@@ -38,13 +39,13 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import AllForms from './components/AllForms.vue'
 
 export default {
   name: 'App',
-  // components: {
-  //   HelloWorld
-  // }
+  components: {
+    AllForms
+  }
 }
 </script>
 
