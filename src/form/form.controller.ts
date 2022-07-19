@@ -27,16 +27,8 @@ export class FormController {
     }
 
     @Post()
-    create(@Body() createFormDto: CreateFormDto): string {
-        return `
-            firstName: ${createFormDto.firstName}
-            lastName: ${createFormDto.lastName}
-            address: ${createFormDto.address}
-            city: ${createFormDto.city}
-            state: ${createFormDto.state}
-            zipCode: ${createFormDto.zipCode}
-            email: ${createFormDto.email}
-            `;
+    create(@Body() createFormDto: CreateFormDto): Promise<Form> {
+        return this.formService.createOne(createFormDto)
     }
 
     @Delete(':id')

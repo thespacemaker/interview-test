@@ -5,6 +5,6 @@ export interface Form {
     address: string;
     city: string;
     state: string;
-    zipcode: string;
+    zipCode: string;
     email: string;
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Form } from './interfaces/form.interface'
+import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient()
 
 @Injectable()
 export class FormService {
@@ -12,7 +14,7 @@ export class FormService {
             address: "123 Nowhere Circle",
             city: "Dallas",
             state: "TX",
-            zipcode: "75207",
+            zipCode: "75207",
             email: "me@adnan.io"
         },
         {
@@ -22,11 +24,11 @@ export class FormService {
             address: "Research Facility Dr",
             city: "Dallas",
             state: "TX",
-            zipcode: "75207",
+            zipCode: "75207",
             email: "011@testcorp.com"
         }
     ]
-    
+
     findAll(): Form[] {
         return this.forms
     }
@@ -34,4 +36,12 @@ export class FormService {
     findOne(id: string): Form {
         return this.forms.find(form => form.id === id);
     }
+
+    async createOne(form: Form): Promise<Form> {
+        const newForm = await prisma.form.create({
+            data: form
+          })
+        return newForm
+    }
+
 }
