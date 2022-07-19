@@ -17,27 +17,27 @@ export class FormController {
     constructor(private readonly formService: FormService) {
     }
     @Get()
-    findAll(): Form[] {
+    findAll(): Promise<Form[]> {
         return this.formService.findAll();
     }
 
     @Get(':id')
-    findOne(@Param('id') id): Form {
+    findOne(@Param('id') id): Promise<Form> {
         return this.formService.findOne(id);
     }
 
     @Post()
     create(@Body() createFormDto: CreateFormDto): Promise<Form> {
-        return this.formService.createOne(createFormDto)
+        return this.formService.createOne(createFormDto);
     }
 
     @Delete(':id')
-    delete(@Param('id') id): string {
-        return `deleted ${id}`;
+    delete(@Param('id') id): Promise<Form> {
+        return this.formService.delete(id);
     }
  
     @Put(':id')
-    update(@Body() updateFormDto: CreateFormDto, @Param('id') id): string {
-        return `update ${id}`;
+    update(@Body() updateFormDto: CreateFormDto, @Param('id') id): Promise<Form> {
+        return this.formService.updateOne(id, updateFormDto);
     }
 }

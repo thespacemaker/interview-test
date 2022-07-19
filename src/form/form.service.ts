@@ -6,35 +6,19 @@ const prisma = new PrismaClient()
 
 @Injectable()
 export class FormService {
-    private readonly forms: Form[] = [
-        {
-            id: "1",
-            firstName: "Adnan",
-            lastName: "Chahbandar",
-            address: "123 Nowhere Circle",
-            city: "Dallas",
-            state: "TX",
-            zipCode: "75207",
-            email: "me@adnan.io"
-        },
-        {
-            id: "011",
-            firstName: "Test Subject",
-            lastName: "011",
-            address: "Research Facility Dr",
-            city: "Dallas",
-            state: "TX",
-            zipCode: "75207",
-            email: "011@testcorp.com"
-        }
-    ]
 
-    findAll(): Form[] {
-        return this.forms
+    async findAll(): Promise<Form[]> {
+        const forms = await prisma.form.findMany()
+        return forms
     }
 
-    findOne(id: string): Form {
-        return this.forms.find(form => form.id === id);
+    async findOne(id: string): Promise<Form> {
+        const form = await prisma.form.findUnique({
+            where: {
+              id: id,
+            },
+          })
+        return form
     }
 
     async createOne(form: Form): Promise<Form> {
@@ -42,6 +26,25 @@ export class FormService {
             data: form
           })
         return newForm
+    }
+
+    async updateOne(id: string, form: Form): Promise<Form> {
+        const updatedForm = await prisma.form.update({
+            where: {
+              id: id,
+            },
+            data: form,
+          })
+        return updatedForm
+    }
+
+    async delete(id: string): Promise<Form> {
+        const deleteForm = await prisma.form.delete({
+            where: {
+              id: id,
+            },
+          })
+        return deleteForm
     }
 
 }
