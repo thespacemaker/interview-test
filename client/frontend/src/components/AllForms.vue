@@ -23,8 +23,8 @@
                         <td class="pr-2">{{ form.state }}</td>
                         <td class="pr-2">{{ form.zipCode }}</td>
                         <td class="pr-2">{{ form.email }}</td>
-                        <td>edit</td>
-                        <td>delete</td>
+                        <UpdateForm :form="form"/>
+                        <DeleteForm :form="form"/>
                     </tr>
                 </tbody>
             </table>
@@ -34,8 +34,15 @@
 
 <script>
 import axios from "axios";
+import DeleteForm from "./DeleteForm.vue"
+import UpdateForm from "./UpdateForm.vue"
+
 export default {
   name: 'AllForms',
+  components: {
+    DeleteForm,
+    UpdateForm
+  },
   data() {
     return {
       formItems: [],

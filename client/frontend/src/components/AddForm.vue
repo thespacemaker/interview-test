@@ -6,7 +6,7 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="firstName">
           First Name
         </label>
-        <input required class="formInput peer" id="firstName" type="text" placeholder="First Name">
+        <input v-model="formData.firstName" required class="formInput peer" id="firstName" type="text" placeholder="First Name">
         <p class="invisible peer-invalid:visible text-red-700 font-light">
           This field cannot be empty
         </p>
@@ -15,7 +15,7 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="firstName">
           Last Name
         </label>
-        <input required class="formInput peer" id="firstName" type="text" placeholder="Last Name">
+        <input v-model="formData.lastName" required class="formInput peer" id="firstName" type="text" placeholder="Last Name">
         <p class="invisible peer-invalid:visible text-red-700 font-light">
           This field cannot be empty
         </p>
@@ -24,7 +24,7 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="address">
           Address
         </label>
-        <input required class="formInput peer" id="address" type="text" placeholder="Address">
+        <input v-model="formData.address" required class="formInput peer" id="address" type="text" placeholder="Address">
         <p class="invisible peer-invalid:visible text-red-700 font-light">
           This field cannot be empty
         </p>
@@ -33,7 +33,7 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="city">
           City
         </label>
-        <input required class="formInput peer" id="city" type="text" placeholder="City">
+        <input v-model="formData.city" required class="formInput peer" id="city" type="text" placeholder="City">
         <p class="invisible peer-invalid:visible text-red-700 font-light">
           This field cannot be empty
         </p>
@@ -42,7 +42,7 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="state">
           State
         </label>
-        <input required class="formInput peer" id="state" type="text" placeholder="State">
+        <input v-model="formData.state" required class="formInput peer" id="state" type="text" placeholder="State">
         <p class="invisible peer-invalid:visible text-red-700 font-light">
           This field cannot be empty
         </p>
@@ -51,7 +51,7 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="zipCode">
           Zip Code
         </label>
-        <input required class="formInput peer" id="zipCode" type="text" placeholder="Zip Code">
+        <input v-model="formData.zipCode" required class="formInput peer" id="zipCode" type="text" placeholder="Zip Code">
         <p class="invisible peer-invalid:visible text-red-700 font-light">
           This field cannot be empty
         </p>
@@ -60,13 +60,13 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
           Email
         </label>
-        <input required class="formInput peer" id="email" type="email" placeholder="Email">
+        <input v-model="formData.email" required class="formInput peer" id="email" type="email" placeholder="Email">
         <p class="invisible peer-invalid:visible text-red-700 font-light">
           Must be a valid email
         </p>
       </div>
       <div class="flex items-center justify-left">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+        <button @click="createOnServer()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
           Create
         </button>
       </div>
@@ -75,13 +75,33 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 export default {
   name: 'AdForm',
   data() {
     return {
-      
+      formData: {}
     };
+  },
+  methods: {
+    async createOnServer() {
+      try {
+        console.log('creating record', this.formData)
+        const res = await axios.post(`http://localhost:3000/form/`, {
+          firstName: this.formData.firstName,
+          lastName: this.formData.lastName,
+          address: this.formData.address,
+          city: this.formData.city,
+          state: this.formData.state,
+          zipCode: this.formData.zipCode,
+          email: this.formData.email
+        });
+        console.log('Updated', res.data)
+        window.location.reload()
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 }
 </script>
