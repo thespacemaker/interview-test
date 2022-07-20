@@ -1,50 +1,41 @@
 <template>
-  <div class="justify-center flex bg-yellow-300 items-center h-screen">
-    <div class="text-4xl">
-      Hello 👋🏼
+  <div class="bg-yellow-300 h-screen">
+    <HelloWorld />
+    <AllForms class="flex mt-12 justify-center" />
+    <div class="flex justify-center my-4">
+        <button v-if="!isFormVisible" @click="showForm" class="bg-blue-200 w-40">Create New</button>
     </div>
-    <div class="text">
-      This is me using Tailwind for the first time
+    <div class="flex justify-center my-4">
+        <button v-if="isFormVisible" @click="showForm" class="bg-blue-200 w-40">Close Form</button>
     </div>
-    <AllForms />
-    <div class="w-full max-w-xs">
-  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-        Username
-      </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
-    </div>
-    <div class="mb-6">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-        Password
-      </label>
-      <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************">
-      <p class="text-red-500 text-xs italic">Please choose a password.</p>
-    </div>
-    <div class="flex items-center justify-between">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-        Sign In
-      </button>
-      <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-        Forgot Password?
-      </a>
-    </div>
-  </form>
-  <p class="text-center text-gray-500 text-xs">
-    &copy;2022 spacemaker. All rights reserved.
-  </p>
-</div>
+    <AddForm v-if="isFormVisible" class="m-4"/>
+    <p class="flex justify-center text-center text-gray-500 text-xs">
+        &copy;2022 spacemaker. All rights reserved.
+      </p>
   </div>
 </template>
 
 <script>
+import HelloWorld from './components/HelloWorld.vue'
 import AllForms from './components/AllForms.vue'
+import AddForm from './components/AddForm.vue'
 
 export default {
   name: 'App',
   components: {
-    AllForms
+    HelloWorld,
+    AllForms,
+    AddForm
+  },
+  data() {
+    return {
+      isFormVisible: false,
+    };
+  },
+  methods: {
+    showForm() {
+      this.isFormVisible = !this.isFormVisible
+    }
   }
 }
 </script>
